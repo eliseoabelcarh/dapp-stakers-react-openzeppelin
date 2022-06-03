@@ -31,6 +31,7 @@ const store = createStore(
   window._REDUX_DEVTOOLS_EXTENSION_ && window._REDUX_DEVTOOLS_EXTENSION_()
 );
 
+// Si cambia wallet Adddress en matamask se captura y vuelve a renderizar
 window.ethereum.on("accountsChanged", function (accounts) {
   // Time to reload your interface with accounts[0]!
   console.log("cHANGEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE", accounts[0]);
@@ -64,6 +65,7 @@ const renderStakerAndStakersList = () => {
 //Get Info for blockchain Contract Data
 renderStakerAndStakersList()
 
+// observo eventos de Bank
 watchingEvents().then(({tokensDepositEvent,tokensWithdrawEvent}) => {
   tokensDepositEvent
     .on("data", async function (event) {
