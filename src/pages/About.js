@@ -11,6 +11,7 @@ const About = () => {
       <Meta title={pageTitle}/>
       <Header head={pageTitle} description={pageDescription} />
     </div>
+    
   )
 }
 

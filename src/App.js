@@ -12,15 +12,17 @@ import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
+
     <Layout>
-      <Container>
+
         <Routes>
           <Route path="/" element={<Home />} exact />
           <Route path="/about" element={<About />} />
           <Route element={<NotFound />} />
         </Routes>
-      </Container>
+    
     </Layout>
+   
   );
 };
 

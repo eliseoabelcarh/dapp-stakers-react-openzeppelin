@@ -19,7 +19,7 @@ contract Bank {
         tekenToken = _tekenToken;
         owner = msg.sender;
     }
-
+   
     // staking function
     function depositTokens(uint256 _amount) public {
         // require staking amount to be greater than zero
@@ -35,6 +35,11 @@ contract Bank {
         isStaking[msg.sender] = true;
         hasStaked[msg.sender] = true;
     }
+
+ function totalStakers() public view returns(uint) {
+        return stakers.length;
+    }
+
 
 
     // unstake tokens

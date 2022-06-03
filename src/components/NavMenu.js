@@ -1,35 +1,40 @@
 import React from "react";
 //import { Link } from "react-router-dom";
-import {  useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import logo from "../images/logo.svg";
 import LoadingButton from "../components/LoadingButton.js";
 import WelcomeWallet from "./WelcomeWallet";
 import Web3 from "web3";
-import { useDispatch } from "react-redux";
-import { addTodoAction } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function NavMenu() {
   const [isConnected, setIsConnected] = useState(false);
-  const [currentAccount, setCurrentAccount] = useState(null)
-  const dispatch = useDispatch()
+  const [currentAccount, setCurrentAccount] = useState("");
+  const currentAddress = useSelector((state) => state.currentStaker.account);
+
+  const dispatch = useDispatch();
   const onLogin = async (provider) => {
     const web3 = new Web3(provider);
-    const accounts = await web3.eth.getAccounts()
-    if(accounts.length === 0){
-        console.log("Please connect Metamask")
-    }else if(accounts[0] !== currentAccount){
-        setCurrentAccount(accounts[0])
-        setIsConnected(true);
-        //agrego a lista de usuarios conectados
-        const userAccount = {id:"s",name:accounts[0],complete:false}
-        dispatch(addTodoAction(userAccount))
+    const accounts = await web3.eth.getAccounts();
+    if (accounts.length === 0) {
+      alert("Please connect Metamaskk");
+    } else if (accounts[0] !== currentAccount) {
+      //window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+      setCurrentAccount(accounts[0]);
+      setIsConnected(true);
     }
-    
   };
   const onLogout = () => {
     setIsConnected(false);
   };
+
+  useEffect(() => {
+    setCurrentAccount(currentAddress)
+    setIsConnected(true);
+  }, [currentAddress]);
+  
 
   return (
     <>
@@ -52,10 +57,10 @@ export default function NavMenu() {
           </Nav>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
-            {!isConnected && (
+            {!isConnected || !currentAccount && (
               <LoadingButton onLogin={onLogin} onLogout={onLogout} />
             )}
-            {isConnected && <WelcomeWallet currentAccount={currentAccount}/>}
+            {isConnected && currentAccount && <WelcomeWallet currentAccount={currentAccount} />}
           </Navbar.Collapse>
         </Container>
       </Navbar>
