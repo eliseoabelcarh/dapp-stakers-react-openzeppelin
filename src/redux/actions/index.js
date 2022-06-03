@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO , ADD_STAKER_TO_LIST, UPDATE_CURRENT_STAKER} from "./types"
+import { ADD_TODO, DELETE_TODO , ADD_STAKER_TO_LIST, UPDATE_CURRENT_STAKER, UPDATE_BANK_CONTRACT, UPDATE_TEKENTOKENCONTRACT, CLEAN_STAKERS_LIST} from "./types"
 
 //en caso se usa APIs
 // export const addTodoAction = todo => (dispatch) => {
@@ -26,4 +26,19 @@ export const addStakerToListAction = staker => ({
 export const updateCurrentStakerAction = staker => ({
     type: UPDATE_CURRENT_STAKER,
     payload:staker
+})
+
+export const updateBankContractAction = bankContract => ({
+    type:UPDATE_BANK_CONTRACT,
+    payload: bankContract
+})
+
+export const updateTekenTokenContractAction = tekenTokenContract => ({
+    type:UPDATE_TEKENTOKENCONTRACT,
+    payload: tekenTokenContract
+})
+
+export const cleanStakersList = ()=>({
+    type: CLEAN_STAKERS_LIST,
+    payload:[]
 })

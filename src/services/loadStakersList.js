@@ -8,6 +8,11 @@ import StakerModel from "./StakerModel";
 const loadDataStakersList = async () => {
     let stakersList = [];
   let symbolTekenToken;
+
+  let tekenTokenContract
+  let bankContract
+
+
   const web3 = window.web3;
   //const accounts = await web3.eth.getAccounts();
   const networkId = await web3.eth.net.getId();
@@ -17,7 +22,7 @@ const loadDataStakersList = async () => {
   //load tekenToken contract
   const tekenData = TekenToken.networks[networkId];
   if (tekenData) {
-    const tekenTokenContract = new web3.eth.Contract(
+     tekenTokenContract = new web3.eth.Contract(
       TekenToken.abi,
       tekenData.address
     );
@@ -29,7 +34,7 @@ const loadDataStakersList = async () => {
   //load BANK contract
   const bankData = Bank.networks[networkId];
   if (bankData) {
-    const bankContract = new web3.eth.Contract(Bank.abi, bankData.address);
+     bankContract = new web3.eth.Contract(Bank.abi, bankData.address);
     console.log("bankContract ", bankContract);
 
     //CHECK FOR STAKERS LIST
@@ -54,7 +59,7 @@ const loadDataStakersList = async () => {
   } else {
     alert("Error: Bank contract not deployed or not detected network");
   }
-return stakersList
+return {stakersList, bankContract, tekenTokenContract}
 };
 
 const loadStakersList = async () => {

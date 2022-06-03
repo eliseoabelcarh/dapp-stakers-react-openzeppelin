@@ -6,7 +6,7 @@ const WelcomeWallet = (props) => {
     <div style={{color:"whitesmoke"}}>
       {/* <Meta title={pageTitle}/> */}
       {/* <Header head={pageTitle} description={pageDescription} /> */}
-      <Icon.Wallet2 color="royalblue" size={25} /> {!props.currentAccount? "":props.currentAccount}
+      <Icon.Wallet2 color="royalblue" size={25} /> {!props.currentAccount? "":StakerModel.reduceWallet(props.currentAccount)}
     </div>
   )
 }

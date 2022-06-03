@@ -19,7 +19,8 @@ const loadData = async (currentReloadAccountAddress) => {
   let tekenBalance;
   let currentUserAccountAddress = null;
   let currentStakingBalance;
-
+ let tekenTokenContract
+let bankContract
   const web3 = window.web3;
   const accounts = await web3.eth.getAccounts();
   const networkId = await web3.eth.net.getId();
@@ -29,7 +30,7 @@ const loadData = async (currentReloadAccountAddress) => {
   //load tekenToken contract
   const tekenData = TekenToken.networks[networkId];
   if (tekenData) {
-    const tekenTokenContract = new web3.eth.Contract(
+     tekenTokenContract = new web3.eth.Contract(
       TekenToken.abi,
       tekenData.address
     );
@@ -55,7 +56,7 @@ const loadData = async (currentReloadAccountAddress) => {
   //load BANK contract
   const bankData = Bank.networks[networkId];
   if (bankData) {
-    const bankContract = new web3.eth.Contract(Bank.abi, bankData.address);
+     bankContract = new web3.eth.Contract(Bank.abi, bankData.address);
     console.log("bankContract ", bankContract);
 
     //CHECK FOR CURRENT STAKER INFO
@@ -69,6 +70,21 @@ const loadData = async (currentReloadAccountAddress) => {
       symbolToken: symbolTekenToken,
       stakingBalance: currentStakingBalance,
     });
+
+    // //CHECK FOR EVENTS EMITTED
+    // bankContract.events
+    //   .TokensDepositEvent({})
+    //   .on("data", async function (event) {
+    //     console.log(
+    //       "EVENEEEEETTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO: ",
+    //      // event.returnValues
+    //       event
+    //     );
+    //     // Do something here
+    //   })
+    //   .on("error", console.error);
+
+
   } else {
     alert("Error: Bank contract not deployed or not detected network");
   }

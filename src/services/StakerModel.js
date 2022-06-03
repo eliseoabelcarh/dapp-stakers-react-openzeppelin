@@ -1,4 +1,13 @@
 const StakerModel = {
+  reduceHashTransaction : (str)=> {
+    var result = "";
+    if (str.length >= 40) {
+      result = ` ${str.substring(0, 7)}... ${str.slice(-6)}`;
+    }else{
+      result = "too little characters"
+    }
+    return result;
+  },
   reduceWallet: (str) => {
     var result = "";
     if (str.length >= 40) {
@@ -23,11 +32,11 @@ const StakerModel = {
     if (!symbolTokenStaked) {
       throw Error("no hay symbolTokenStaked recibido");
     }
-    let reduced = StakerModel.reduceWallet(account);
+    
     let inEth = StakerModel.fromWei(stakingBalance);
     return {
       id,
-      account: reduced,
+      account: account,
       stakingBalance: inEth,
       symbolTokenStaked,
     };
@@ -54,12 +63,12 @@ const StakerModel = {
     if (!stakingBalance) {
       throw Error("no hay stakingBalance recibido");
     }
-    let reduced = StakerModel.reduceWallet(account);
+    
     let inEthBalance = StakerModel.fromWei(balance);
     let inEthStakingBalance = StakerModel.fromWei(stakingBalance);
     return {
       id,
-      account: reduced,
+      account: account,
       balance: inEthBalance,
       symbolToken,
       stakingBalance: inEthStakingBalance,

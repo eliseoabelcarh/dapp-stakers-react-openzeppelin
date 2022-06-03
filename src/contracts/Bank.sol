@@ -3,7 +3,6 @@ pragma solidity >=0.4.22 <0.9.0;
 
 import "./TekenToken.sol";
 
-
 contract Bank {
     string public name = "Bank";
     address public owner;
@@ -15,11 +14,14 @@ contract Bank {
     mapping(address => bool) public hasStaked;
     mapping(address => bool) public isStaking;
 
+    event TokensDepositEvent(address indexed _staker);
+    event TokensWithdrawEvent(address indexed _staker);
+
     constructor(TekenToken _tekenToken) {
         tekenToken = _tekenToken;
         owner = msg.sender;
     }
-   
+
     // staking function
     function depositTokens(uint256 _amount) public {
         // require staking amount to be greater than zero
@@ -34,13 +36,13 @@ contract Bank {
         // Update Staking Balance
         isStaking[msg.sender] = true;
         hasStaked[msg.sender] = true;
+
+        emit TokensDepositEvent(msg.sender);
     }
 
- function totalStakers() public view returns(uint) {
+    function totalStakers() public view returns (uint256) {
         return stakers.length;
     }
-
-
 
     // unstake tokens
     function unstakeTokens() public {
@@ -53,8 +55,7 @@ contract Bank {
         stakingBalance[msg.sender] = 0;
         // Update Staking Status
         isStaking[msg.sender] = false;
+
+        emit TokensWithdrawEvent(msg.sender);
     }
-
-   
 }
-
